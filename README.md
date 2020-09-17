@@ -28,7 +28,7 @@ WHEN I refresh the page
 THEN the saved events persist
 
 ## App Screenshot
-<img src="Working Docs\screenshot.jpg">
+<img src="05-third-party-apis-homework-demo.gif" alt="Daily Scheduler Gif">
 
 ## Live Site Demo
 https://mnilou.github.io/daily-scheduler/ 
