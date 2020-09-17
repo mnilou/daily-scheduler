@@ -2,8 +2,6 @@
 
 This app is a simple calendar application that allows the user to save events for each hour of the day. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery and Javascript.
 
-<!-- Starter html and css files are provided in the ./Develop folder. You should familiarize yourself with the code in these files before proceeding to pseudo-code your approach for solving the problem. -->
-
 ## App Outline
 AS AN employee with a busy schedule
 I WANT to add important events to a daily planner
