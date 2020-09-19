@@ -1,55 +1,53 @@
-// Pseudo-code
+$(document).ready(function(){
+// current 
+  $("#currentDay").text(moment().format("dddd, MMMM Do"));
 
-// 3. Timeblocks are color coded for past, present and future ()
-// Gray block is past (id="hour-9")
-// Red block is past (id="hour-10")
-// Green block is past (id="hour-11")
+  $(".saveBtn").on("click", function(){
+//save button actions
+  var activity = $(this).siblings(".description").val().trim();
+console.log(activity);
+console.log(localStorage);
 
+var time = $(this).parent().attr("id");
+console.log(time);
+localStorage.setItem(time, activity);
+  })
+// do this for every hour
+  $("#hour-9 .description").val(localStorage.getItem("hour-9"));
+  $("#hour-10 .description").val(localStorage.getItem("hour-10"));
+  $("#hour-11 .description").val(localStorage.getItem("hour-11"));
+  $("#hour-12 .description").val(localStorage.getItem("hour-12"));
+  $("#hour-13 .description").val(localStorage.getItem("hour-13"));
+  $("#hour-14 .description").val(localStorage.getItem("hour-14"));
+  $("#hour-15 .description").val(localStorage.getItem("hour-15"));
+ 
 // 1. When planner is opened, current date is displayed at the top (moment.js)
 // <p id="currentDay" class="lead"></p>
-$(document).ready(function () {
-  var m = document.querySelector("#currentDay");
-  m.textContent = moment().format("dddd[,] MMMM Do YYYY");
+// 2. When scrolling down, timeblocks are displayed // with standard business hours (moment.js)
+// <div id="hour-12" class="row time-block">
 
-  let currentHour = m.hours();
+// 3. Timeblocks are color coded for past, present and future ()
+// Gray block is past
+// Red block is past
+// // Green block is past
+startSchedule();
 
-  // 2. When scrolling down, timeblocks are displayed // with standard business hours (moment.js)
-  // <div id="hour-12" class="row time-block">
-
-  // Empty array to store values entered in textarea input by user
-  var scheduleItems = [];
-
-  // 4. When user clicks on a time block, an event can be added (jQuery .on click)
-  $(".description").on("click", function () {
-    scheduleItems.preventDefault();
-
-    // Code to create an area to write the entered value
-    var inputEl = $("<p>");
-    inputEl.text(inputSchedule);
-    $(".description").append(textEl);
-
-    // Code to push input of schedule into array if the input is NOT equal to an empty string
-    if (scheduleAgenda !== "") {
-      for (var i = 0; i < scheduleItems.length; i++) {
-        var inputSchedule = $(".description").val();
-
-        scheduleItems.push(inputSchedule);
-
-        localStorage.setItem("scheduleItems", JSON.stringify(scheduleItems));
-        $(".description").text(scheduleItems);
-        $(".description").html(scheduleItems[i]);
-      }
-    } else return;
+function startSchedule() {
+  var currentHour = moment().hours();
+  console.log(currentHour);
+  $(".time-block").each(function () {
+    var hourChoices = parseInt($(this).attr("id").split("-")[1]);
+    if (hourChoices < currentHour) {
+      $(this).addClass("past");
+      $(this).removeClass("present", "future");
+    } else if (hourChoices === currentHour) {
+      $(this).addClass("present");
+      $(this).removeClass("past", "future");
+    } else {
+      $(this).addClass("future");
+      $(this).removeClass("past", "present");
+    }
   });
-
-  // 5. When click #saveBtn, data is stored and displayed (JSON)
-  var savedSchedule = JSON.parse(localStorage.getItem("scheduleItems"));
-
-  if (storedScheduleItems !== "") {
-    scheduleItems = storedScheduleItems;
-  }
-
-  // 6. When refreshing the page, saved events remain in local storage
-  $(".saveBtn").on("click", scheduleSet());
-  console.log(scheduleSet);
+}
+localStorage.clear();
 });
